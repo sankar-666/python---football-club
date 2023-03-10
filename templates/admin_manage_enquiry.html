@@ -1,0 +1,33 @@
+{% include 'adminheader.html' %}
+
+<br><br>
+<center>
+<h1>View Enquiry</h1>
+<table class="table table-striped tbl-new">
+    <tr>
+        <th>Index No</th>
+        <th>Enquiry</th>
+        <th>Place</th>
+        <th>Phone</th>
+  
+        
+    </tr>
+    {% for row in data['res'] %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row['enquiry'] }}</td>
+        <td>{{ row['place'] }}</td>
+        <td>{{ row['phone'] }}</td>
+        {% if row['usertype'] == 'pending' %}
+        <td><a class="btn btn-success" onclick="return confirm('Are You Sure!')" href="?action=active&lid={{ row['login_id'] }}">Active</a></td>
+        <td><a class="btn btn-danger" onclick="return confirm('Are You Sure!')" href="?action=inactive&lid={{ row['login_id'] }}">Inactive</a></td>
+        {% else %}
+        <td>{{ row['usertype'] }}</td>
+
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+</center>
+
+{% include 'footer.html' %}

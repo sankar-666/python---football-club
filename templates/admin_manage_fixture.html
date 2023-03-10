@@ -1,0 +1,126 @@
+{% include 'adminheader.html' %}
+
+
+
+<div class="music">
+    <center>
+        <div class="img-div" style="padding: 100px 0px;">
+        {% if data['raw'] %}
+    
+        
+        <form id="form" action="" method="post" class="form" enctype="multipart/form-data">
+            <h1 class="hd">Update Fixture</h1>
+            <table class="table form-group">
+                <tr>
+                    <th>Fixture</th>
+                    <td><input type="text" class="form-control"  value="{{ data['raw'][0]['fixture'] }}" required name="fixture" id=""></td>
+                </tr>
+        
+                <tr>
+                   
+                    <td colspan="2" align="center"><input type="submit" class="btn btn-success" name="update" id="btn"></td>
+                </tr>
+                </table>
+                </form>
+        
+    
+        {% else %}
+        
+        <form id="form" action="" method="post" class="form" enctype="multipart/form-data">
+            <h1 class="hd">Manage Fixture</h1>
+            <table class="table form-group">
+                <tr>
+                    <th>Fixture</th>
+                    <td><input type="text"  class="form-control" required name="fixture" id=""></td>
+                </tr>
+            
+                <tr>
+                   
+                    <td colspan="2" align="center"><input type="submit" class="btn btn-success" name="btn" id="btn"></td>
+                </tr>
+                </table>
+                </form>
+    
+        {% endif %}
+    </div>
+        <br><br>
+        {% if data['count'] >= 1 %}
+        <h5 class="hd">View News</h5>
+        <table class="table  tbl-new" style="width: 600px;">
+            <tr align="center">
+                <th>index</th>
+                <th>Fixture</th>
+
+                
+            </tr>
+            {% for row in data['res'] %}
+            <tr class="boxrow" align="center">
+                <td>{{ loop.index }}</td>
+                <td>{{ row['fixture'] }}</td>
+              
+                <td><a class="btn btn-info" href="?action=update&fid={{ row['fixture_id'] }}">Update</a></td>
+                <td><a class="btn btn-danger" onclick="return confirm('Are You Sure!')" href="?action=delete&fid={{ row['fixture_id'] }}">Delete</a></td>
+                       </tr>
+                       
+            {% endfor %}
+        </table>
+        {% endif %}
+    </center>
+    
+    <script src="
+    https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+        </script>
+    <script>
+        $(function() {
+            $("input[name='news']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+    
+            });
+            $("input[name='lname']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+    
+            });
+            // $("input[name='dob']").on('input', function(e) {
+            //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+    
+            // });
+            
+            $("input[name='phone']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                
+            });
+            $("input[name='pin']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                
+            });
+            $("input[name='email']").on('input', function(e) {
+                  var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                    if(!re) {
+                        $('#eerror').show();
+                    } else {
+                        $('#eerror').hide();
+                    }
+    
+            });
+            $("input[name='address']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+    
+            });
+            $("input[name='place']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+    
+            });
+                
+            $("input[name='pwd']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+                
+            });
+        });
+    
+    
+    </script>
+     
+  </div>
+
+  
+{% include 'footer.html' %}

@@ -1,0 +1,157 @@
+{% include 'publicheader.html' %}
+
+
+<div class="login-sec">
+  <form style="margin-left: 800px;" method="post">
+      <div class=" d-block">
+        <span style="color: #1ed760;">Username<label>*</label></span>
+        <input class="form-control" required name="uname" type="text"> 
+      </div>
+      <div class="pss  d-block">
+        <span style="color: #1ed760;">Password<label>*</label></span>
+        <input class="form-control" required name="pasw"  type="password"> 
+      </div>
+      <!-- <a class="forgot" href="#">Forgot Your Password?</a> -->
+      <div>
+  
+        <input type="submit" name="btn" value="Login">
+      </div>
+    </form>
+    <div style="margin-left: 100px;" class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">
+      <img id="img" src="/static/img/Spotify.png" class="img-fluid animated" alt="">
+    </div>
+  </div>
+  
+  <style>
+
+#img{
+
+border-radius: 10px;
+animation: movedown 3s ease .1s infinite;
+transition:  all 2s;
+height: 400px;position: relative;bottom: 40px;left: 50px;
+
+}
+@keyframes movedown{
+0%{
+    transform: translateY(30px);
+}
+50%{
+    transform: translateY(0px);
+}
+100%{
+    transform: translateY(30px);
+}
+}
+
+
+    .login-sec{
+      height: 80vh;
+      width: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: -300px;
+    }
+  
+    form{
+      
+      padding: 40px 60px;
+      border-radius: 5px;
+      box-shadow: 2px 4px 6px #1ed760 ,-2px -4px 6px rgb(17, 216, 100);
+      display: flex;
+      flex-direction: column;
+      min-width: 450px;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .pss{
+      margin-left: 5px;
+      
+      
+    }
+  
+    .d-block{
+      min-width: 300px !important;
+     
+    }
+  
+    input[type="submit"]{
+      margin-top: 10px;
+      background: #1ed760;
+      border: none;
+      padding: 10px 20px;
+      display: block;
+      color: white;
+      font-weight: 600;
+    }
+  </style>
+
+<script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+  $(document).ready(function() {
+     function disablePrev() { window.history.forward() }
+     window.onload = disablePrev();
+     window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+  });
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(function() {
+        $("input[name='fname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        $("input[name='lname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        // $("input[name='dob']").on('input', function(e) {
+        //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+
+        // });
+        
+        $("input[name='phone']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='pin']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='email']").on('input', function(e) {
+              var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if(!re) {
+                    $('#eerror').show();
+                    $('#btn').prop('disabled', true);
+                    console.log("err");
+                } else {
+                    $('#btn').prop('disabled', false);
+                    $('#eerror').hide();
+                    console.log("err");
+                }
+
+        });
+        $("input[name='address']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+
+        });
+        $("input[name='place']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+            
+        $("input[name='pwd']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+            
+        });
+    });
+
+
+</script>
+
+{% include 'footer.html' %}

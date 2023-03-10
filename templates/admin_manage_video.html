@@ -1,0 +1,77 @@
+{% include 'adminheader.html' %}
+
+
+
+<div class="music">
+    <center>
+        <div class="img-div" style="padding: 100px 0px;">
+        {% if data['raw'] %}
+    
+        
+        <form id="form" action="" method="post" class="form" enctype="multipart/form-data">
+            <h1 class="hd">Update Video</h1>
+            <table class="table form-group">
+                <tr>
+                    <th>Video</th>
+                    <td><video controls src="/{{ data['raw'][0]['video'] }}" height="120" width="160"></video></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="file"  name="video" class="form-control" id=""></td>
+                </tr>
+        
+                <tr>
+                   
+                    <td colspan="2" align="center"><input type="submit" class="btn btn-success" name="update" id="btn"></td>
+                </tr>
+                </table>
+                </form>
+        
+    
+        {% else %}
+        
+        <form id="form" action="" method="post" class="form" enctype="multipart/form-data">
+            <h1 class="hd">Manage Video</h1>
+            <table class="table form-group">
+                <tr>
+                    <th>Video</th>
+                    <td><input type="file"  name="video" class="form-control" id=""></td>
+                </tr>
+            
+                <tr>
+                   
+                    <td colspan="2" align="center"><input type="submit" class="btn btn-success" name="btn" id="btn"></td>
+                </tr>
+                </table>
+                </form>
+    
+        {% endif %}
+    </div>
+        <br><br>
+        {% if data['count'] >= 1 %}
+        <h5 class="hd">View News</h5>
+        <table class="table  tbl-new" style="width: 600px;">
+            <tr align="center">
+                <th>index</th>
+                <th>Video</th>
+
+                
+            </tr>
+            {% for row in data['res'] %}
+            <tr class="boxrow" align="center">
+                <td>{{ loop.index }}</td>
+                <td><video controls src="/{{ row['video'] }}" height="120" width="160"></video></td>
+              
+                <td><a class="btn btn-info" href="?action=update&vid={{ row['video_id'] }}">Update</a></td>
+                <td><a class="btn btn-danger" onclick="return confirm('Are You Sure!')" href="?action=delete&vid={{ row['video_id'] }}">Delete</a></td>
+                       </tr>
+                       
+            {% endfor %}
+        </table>
+        {% endif %}
+    </center>
+    
+  </div>
+
+  
+{% include 'footer.html' %}
