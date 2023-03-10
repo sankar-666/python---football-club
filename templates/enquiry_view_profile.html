@@ -1,0 +1,53 @@
+{% include 'enquiryheader.html' %}
+
+<div style="display: flex;justify-content: center;align-items: center;">
+
+    <div>
+        <form action="" method="post">
+            <h2>My Profile</h2>
+            {% if data['raw'] %}
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text"  value="{{ data['res'][0]['enquiry'] }}" required  name="enquiry" id=""></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td><input type="number"  value="{{ data['res'][0]['phone'] }}"  required name="phone" id="phone"></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="text"  value="{{ data['res'][0]['email'] }}" required  name="email" id=""></td>
+                </tr>
+                <tr>
+                  
+                    <th><input type="submit" name="update" value="Save" class="btn btn-danger" id=""></th>
+                </tr>
+            </table>
+                {% else %}
+            
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['enquiry'] }}" name="" id=""></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['phone'] }}" name="" id=""></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['email'] }}" name="" id=""></td>
+                </tr>
+                <tr>
+                  
+                    <th><a class="btn btn-success" href="?action=update">Update</a></th>
+                </tr>
+            </table>
+            {% endif %}
+        </form>
+    </div>
+
+</div>
+
+{% include 'footer.html' %}

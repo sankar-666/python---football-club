@@ -1,0 +1,27 @@
+{% include 'enquiryheader.html' %}
+
+<br><br>
+<center>
+<h1>View Clubs</h1>
+<table class="table table-striped tbl-new">
+    <tr>
+        <th>Index No</th>
+        <th>Club</th>
+        <th>Place</th>
+        <th>Phone</th>
+  
+        
+    </tr>
+    {% for row in data['res'] %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row['club'] }}</td>
+        <td>{{ row['place'] }}</td>
+        <td>{{ row['phone'] }}</td>
+       
+    </tr>
+    {% endfor %}
+</table>
+</center>
+
+{% include 'footer.html' %}

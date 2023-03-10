@@ -7,8 +7,9 @@
     <tr>
         <th>Index No</th>
         <th>Enquiry</th>
-        <th>Place</th>
         <th>Phone</th>
+        <th>Email</th>
+        <th>Status</th>
   
         
     </tr>
@@ -16,11 +17,11 @@
     <tr>
         <td>{{ loop.index }}</td>
         <td>{{ row['enquiry'] }}</td>
-        <td>{{ row['place'] }}</td>
         <td>{{ row['phone'] }}</td>
+        <td>{{ row['email'] }}</td>
         {% if row['usertype'] == 'pending' %}
-        <td><a class="btn btn-success" onclick="return confirm('Are You Sure!')" href="?action=active&lid={{ row['login_id'] }}">Active</a></td>
-        <td><a class="btn btn-danger" onclick="return confirm('Are You Sure!')" href="?action=inactive&lid={{ row['login_id'] }}">Inactive</a></td>
+        <td><a class="btn btn-success" onclick="return confirm('Are You Sure!')" href="?action=active&lid={{ row['login_id'] }}">Approve</a></td>
+        <td><a class="btn btn-danger" onclick="return confirm('Are You Sure!')" href="?action=inactive&lid={{ row['login_id'] }}">Reject</a></td>
         {% else %}
         <td>{{ row['usertype'] }}</td>
 

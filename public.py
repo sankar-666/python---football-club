@@ -25,20 +25,13 @@ def login():
             if utype == "admin":
                 flash("Login Success")
                 return redirect(url_for("admin.adminhome"))
-            elif utype == "player":
-                q="select * from player where login_id='%s'"%(session['loginid'])
-                val=select(q)
-                if val:
-                    session['pid']=val[0]['player_id']
-                    flash("Login Success")
-                    return redirect(url_for("player.playerhome"))
-            elif utype == "team":
-                q="select * from team where login_id='%s'"%(session['loginid'])
+            elif utype == "enquiryteam":
+                q="select * from enquiry where login_id='%s'"%(session['loginid'])
                 val1=select(q)
                 if val1:
-                    session['tid']=val1[0]['team_id']
+                    session['eid']=val1[0]['enquiry_id']
                     flash("Login Success")
-                    return redirect(url_for("team.teamhome"))
+                    return redirect(url_for("enquiry.enquiryhome"))
                
             
             else:
@@ -50,3 +43,28 @@ def login():
 
 
     return render_template("login.html")
+
+
+@public.route("/enquiry_reg",methods=['get','post'])
+def enquiry_reg():
+    if 'btn' in request.form:
+        name=request.form['name']
+        phone=request.form['phone']
+        email=request.form['email']
+       
+        pwd=request.form['pwd']
+        uname=request.form['uname']
+      
+
+        q="select * from login where username='%s'"%(uname)
+        res=select(q)
+        if res:
+            flash("This Username already exist!, try register with new one.")
+        else:
+            q="insert into login values(null,'%s','%s','pending')"%(uname,pwd)
+            lid=insert(q)
+            q="insert into enquiry values (NULL,'%s','%s','%s','%s')"%(lid,name,phone,email)
+            insert(q)
+            flash("Registration successfull")
+            return redirect(url_for("public.login"))
+    return render_template("enquiry_reg.html")

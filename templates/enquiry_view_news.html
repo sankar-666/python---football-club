@@ -1,0 +1,23 @@
+{% include 'enquiryheader.html' %}
+
+<br><br>
+<center>
+<h1>View Users</h1>
+<table class="table table-striped tbl-new">
+    <tr>
+        <th>Index No</th>
+        <th>News</th>
+
+  
+        
+    </tr>
+    {% for row in data['res'] %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row['news'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</center>
+
+{% include 'footer.html' %}

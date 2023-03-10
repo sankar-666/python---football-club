@@ -1,0 +1,51 @@
+{% include 'enquiryheader.html' %}
+
+<br><br>
+<center>
+    {% if data['showrep'] %}
+    <h1>Send Reply</h1>
+
+    <form action="" method="post">
+        <table>
+            <tr>
+                <th>Reply</th>
+                <td><input type="text" required name="reply" class="form-control" id=""></td>
+            </tr>
+            <tr>
+                <td><input type="submit" class="btn btn-danger" name="btn" id=""></td>
+            </tr>
+        </table>
+    </form>
+
+    {% else %}
+<h1>View Complaints</h1>
+<table class="table table-striped tbl-new">
+    <tr>
+        <th>Index No</th>
+        <th>Complaint From</th>
+        <th>Name</th>
+        <th>Complaint</th>
+        <th>Date</th>
+        <th>Reply</th>
+  
+    </tr>
+    
+    {% for row in data['res'] %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row['fromname'] }}</td>
+        <td>{{ row['name'] }}</td>
+        <td>{{ row['complaint'] }}</td>
+        <td>{{ row['date'] }}</td>
+        {% if row['status'] == 'pending' %}
+        <a class="btn btn-success" href="?acton=reply&cid={{ row['complaint_id'] }}"></a>
+        {% else %}
+        <td>{{ row['reply'] }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+</center>
+
+{% include 'footer.html' %}
