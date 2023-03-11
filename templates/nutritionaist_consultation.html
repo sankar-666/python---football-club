@@ -1,0 +1,54 @@
+{% include 'nutritionaistheader.html' %}
+
+<center>
+    <h1>Get your free Consultation</h1>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <th>Select Physiotherapist</th>
+                <td>
+                    <select name="pid" class="form-control" id="">
+                        {% for i in data['ps'] %}
+                        <option value="{{ i['psysician_id'] }}">{{ i['psysician'] }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Consulted for</th>
+                <td><input type="text" name="reason" class="form-control" id=""></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="btn" class="btn btn-danger" id=""></td>
+            </tr>
+        </table>
+    </form>
+</center>
+
+<br><br>
+<center>
+<h4>View My Consultation Details and Reply</h4>
+<table class="table table-striped tbl-new" style="width: 700px;">
+    <tr>
+        <th>Index No</th>
+        <th>Physiotherapist</th>
+        <th>Consulted for</th>
+        <th>Reply</th>
+   
+  
+        
+    </tr>
+    {% for row in data['res'] %}
+    <tr>
+        <td>{{ loop.index }}</td>
+    
+        <td>{{ row['psysician'] }}</td>
+        <td>{{ row['consulted'] }}</td>
+        <td>{{ row['details'] }}</td>
+       
+    </tr>
+    {% endfor %}
+</table>
+</center>
+
+{% include 'footer.html' %}
