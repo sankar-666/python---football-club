@@ -39,6 +39,13 @@ def login():
                     session['nid']=val7[0]['nutretion_id']
                     flash("Login Success")
                     return redirect(url_for("nutritionaist.nutritionaisthome"))
+            elif utype == "player":
+                q="select * from player where login_id='%s'"%(session['loginid'])
+                val8=select(q)
+                if val8:
+                    session['pid']=val8[0]['player_id']
+                    flash("Login Success")
+                    return redirect(url_for("player.playerhome"))
                
             
             else:

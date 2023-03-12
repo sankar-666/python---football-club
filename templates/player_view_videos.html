@@ -1,0 +1,27 @@
+{% include 'playerheader.html' %}
+<br><br>
+<center>
+<h1 class="hd">View Videos</h1>
+<table class="table  tbl-new" style="width: 600px;">
+    <tr align="center">
+        <th>index</th>
+        <th>Video</th>
+
+        
+    </tr>
+    {% for row in data['res'] %}
+    <tr class="boxrow" align="center">
+        <td>{{ loop.index }}</td>
+        <td><video controls src="/{{ row['video'] }}" height="120" width="160"></video></td>
+      
+          </tr>
+               
+    {% endfor %}
+</table>
+
+</center>
+
+</div>
+
+
+{% include 'footer.html' %}

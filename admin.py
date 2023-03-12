@@ -108,15 +108,22 @@ def admin_manage_news():
 @admin.route('/admin_manage_fixture',methods=['get','post'])
 def admin_manage_fixture():
     data={}
+    q="select * from match_category"
+    data['val']=select(q)
     if 'btn' in request.form:
         fixture=request.form['fixture']
+        date=request.form['date']
+        time=request.form['time']
+        team1=request.form['team1']
+        team2=request.form['team2']
+        pid=request.form['pid']
        
-        q="insert into fixture values (null,'%s')"%(fixture)
+        q="insert into fixture values (null,'%s','%s','%s','%s','%s','%s')"%(pid,fixture,date,time,team1,team2)
         insert(q)
         flash("Successfully Added")
         return redirect(url_for("admin.admin_manage_fixture"))
 
-    data={}
+
     q="select * from fixture"
     data['res']=select(q)
     data['count']=len(select(q))
@@ -135,8 +142,12 @@ def admin_manage_fixture():
 
         if 'update' in request.form:
             fixture=request.form['fixture']
+            date=request.form['date']
+            time=request.form['time']
+            team1=request.form['team1']
+            team2=request.form['team2']
 
-            q="update fixture set fixture='%s' where fixture_id='%s' "%(fixture,fid)
+            q="update fixture set fixture='%s',date='%s', time='%s', team1='%s', team2='%s' where fixture_id='%s' "%(fixture,date,time,team1,team2,fid)
             update(q)
             flash("Updated Successfully")
             return redirect(url_for("admin.admin_manage_fixture"))
@@ -228,3 +239,51 @@ def admin_view_coach():
     q="select * from coach"
     data['res']=select(q)   
     return render_template('admin_view_coach.html',data=data)
+
+
+
+@admin.route('/admin_manage_matchcategory',methods=['get','post'])
+def admin_manage_matchcategory():
+    data={}
+    if 'btn' in request.form:
+        catg=request.form['catg']
+       
+        q="insert into match_category values (null,'%s')"%(catg)
+        insert(q)
+        flash("Successfully Added")
+        return redirect(url_for("admin.admin_manage_matchcategory"))
+
+    data={}
+    q="select * from match_category"
+    data['res']=select(q)
+    data['count']=len(select(q))
+
+    if 'action' in request.args:
+        action=request.args['action']
+        cid=request.args['cid'] 
+    else:
+        action=None
+
+    
+    # if action == "update":
+    #     q="select * from video where video_id='%s'"%(vid)
+    #     val=select(q)
+    #     data['raw']=val
+
+    #     if 'update' in request.form:
+    #         if request.files['video']:
+    #             video=request.files['video']
+    #             path="static/uploads/"+str(uuid.uuid4())+video.filename
+    #             video.save(path)
+
+    #             q="update video set video='%s' where video_id='%s'"%(path,vid)
+    #             update(q)
+    #         flash("Updated Successfully")
+    #         return redirect(url_for("admin.admin_manage_matchcategory"))
+    if action == "delete":
+        q="delete from match_category where catg_id='%s' "%(cid)
+        delete(q)
+        flash("Deleted Successfully")
+        return redirect(url_for("admin.admin_manage_matchcategory"))
+    return render_template('admin_manage_matchcategory.html',data=data) 
+
