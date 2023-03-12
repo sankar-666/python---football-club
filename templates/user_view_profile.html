@@ -1,0 +1,97 @@
+{% include 'user_header.html' %}
+
+<div style="display: flex;justify-content: center;align-items: center;">
+
+    <div>
+        <form action="" method="post" id="reg" enctype="multipart/form-data">
+            <h2>My Profile</h2>
+            {% if data['raw'] %}
+            <table class="table">
+                <tr>
+                    <th>Firstname</th>
+                    <td><input type="text"  value="{{ data['res'][0]['fname'] }}" required  name="fname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Lastname</th>
+                    <td><input type="text" required value="{{ data['res'][0]['lname'] }}" name="lname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Place</th>
+                    <td><input type="text" required value="{{ data['res'][0]['place'] }}" name="place" id=""></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td><input type="number"  value="{{ data['res'][0]['phone'] }}"  required name="phone" id="phone"></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="text"  value="{{ data['res'][0]['email'] }}" required  name="email" id=""></td>
+                </tr>
+                <tr>
+                    <th>Aadhar No</th>
+                    <td><input type="text"  value="{{ data['res'][0]['aadhar_no'] }}" name="adhar" id=""></td>
+                </tr>
+                
+                <tr>
+                    <th>Date Of Birth</th>
+                    <td><input type="text"  value="{{ data['res'][0]['dob'] }}" name="dob" id=""></td>
+                </tr>
+                <tr>
+                    <th>Upload Photo</th>
+                    <td><input type="file" name="photo"></td>
+                </tr>
+                <tr>
+                  
+                    <th><input type="submit" name="update" value="Save" class="btn btn-danger" id=""></th>
+                </tr>
+             
+            </table>
+                {% else %}
+            
+            <table class="table">
+                <tr>
+                    <th>photo</th>
+                    <td><img src="/{{ data['res'][0]['photo'] }}" alt="" style="width: 210px; height: 150px;"></td>
+                </tr>
+                <tr>
+                    <th>Firstname</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['fname'] }}" name="" id=""></td>
+                </tr>
+                <tr>
+                    <th>Lastname</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['lname'] }}" name="" id=""></td>
+                </tr>
+                <tr>
+                    <th>Place</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['place'] }}" name="" id=""></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['phone'] }}" name="" id=""></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['email'] }}" name="" id=""></td>
+                </tr>
+                <tr>
+                    <th>Aadhar No</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['aadhar_no'] }}" name="" id=""></td>
+                </tr>
+                
+                <tr>
+                    <th>Date Of Birth</th>
+                    <td><input type="text" disabled value="{{ data['res'][0]['email'] }}" name="" id=""></td>
+                </tr>
+                
+                <tr>
+                  
+                    <th><a class="btn btn-success" href="?action=update">Update</a></th>
+                </tr>
+            </table>
+            {% endif %}
+        </form>
+    </div>
+
+</div>
+
+{% include 'footer.html' %}

@@ -1,0 +1,23 @@
+{% include 'publicheader.html' %}
+   
+<h3 style="margin-top: 100px;" align="center">view All Clubs</h3>
+ 
+    <div class="container">
+        <div class="row">
+            {% for i in data['club'] %}
+          <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src="/{{i['photo']}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{i['club']}}</h5>
+                <p class="card-text">{{i['place']}},<br>Phone:{{i['phone']}}</p>
+                <a href="viewdetails?id={{i['club_id']}}" class="btn btn-primary">Go Details</a>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+      </div>
+  <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js" integrity="sha512-MXZiehB7i/6tO1smDm33MEoosXTfRyEhbx95caOoV9ZZ5ZqLlfg1EXBtUEORpumf+ywCz5e7jL1CZ2q3/N5P5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% include 'footer.html' %}

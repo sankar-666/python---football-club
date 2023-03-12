@@ -1,0 +1,28 @@
+{% include 'physioheader.html' %}
+<center>
+    <div class="top-div"></div>
+        <h5 class="hd">View Ranks</h5>
+        <table class="table  tbl-new" style="width: 600px;">
+            <tr align="center">
+                <th>index</th>
+                <th>Player</th>
+                <th>Place</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Rank</th>
+
+                
+            </tr>
+            {% for row in data['res'] %}
+            <tr class="boxrow" align="center">
+                <td>{{ loop.index }}</td>
+                <td>{{ row['fname'] }}{{ row['lname'] }}</td>
+                <td>{{ row['place'] }}</td>
+                <td>{{ row['phone'] }}</td>
+                <td>{{ row['email'] }}</td>
+                <td>{{ row['rank'] }}</td>
+            </tr>                      
+            {% endfor %}
+        </table>
+    </center>
+        {% include 'footer.html' %}

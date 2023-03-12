@@ -1,24 +1,83 @@
 {% include 'clubadminheader.html' %}
+
+    
 <center>
+    <div style="margin: 100px auto;">
+        <form action="" method="post" style="width: 500px;" enctype="multipart/form-data">
+            <h1>Coach Add</h1>
+            <table class="table">
+                <tr>
+                    <th>Firstname</th>
+                    <td><input type="text" required class="form-control" name="fname" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['fname']}}{% endif %}"></td>
+                </tr>
+                <tr>
+                    <th>Lastname</th>
+                    <td><input type="text" required class="form-control" name="lname" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['lname']}}{% endif %}"></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td><input type="text" maxlength="10" required class="form-control" name="phone" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['phone']}}{% endif %}"></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="text" required class="form-control" name="email" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['email']}}{% endif %}"></td>
+                </tr>
+                <tr>
+                    <th>Photo</th>
+                    <td><input type="file" required class="form-control" name="photo" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['photo']}}{% endif %}"></td>
+                </tr>      
+                <tr>
+                    <th>Dob</th>
+                    <td><input type="date" required class="form-control" name="dob" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['dob']}}{% endif %}"></td>
+                </tr>      
+                <tr>
+                    <th>Place</th>
+                    <td><input type="text" required class="form-control" name="place" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['place']}}{% endif %}"></td>
+                </tr>
+                {% if data['coachup'] %}
+                {% else %}
+                
+                <tr>
+                    <th>Username</th>
+                    <td><input type="text" required class="form-control" name="uname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td><input type="password" required class="form-control" name="pwd" id=""></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" class="btn btn-success" {% if data['coachup'] %} name="edit" value="Update" {% else %} name="btn" {% endif %} id="btn"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</center>
+
     <h2>View Coach</h2>
     
-<table class="table" style="width: 500px;">
+<table class="table" style="width: 900px;">
     <tr>
         <th>#</th>
+        <th></th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Place </th>
         <th>Phone</th>
         <th>Email</th>
+        <th>Date Of Birth</th>
     </tr>
     {% for i in data['coach'] %}
     <tr>
+        <td><img src="/{{i['photo']}}" alt="" style="width: 100px;height: 100px;"></td>
         <td>{{loop.index}}</td>
         <td>{{i['fname']}}</td>
         <td>{{i['lname']}}</td>
         <td>{{i['place']}}</td>
         <td>{{i['phone']}}</td>
         <td>{{i['email']}}</td>
+        <td>{{i['dob']}}</td>
+        <td><a href="?action=update&id={{i['coach_id']}}" class="btn btn-danger">Update</a></td>
         {% if i['usertype']=='pending' %}
         <td><a href="?action=approve&id={{i['coach_id']}}" class="btn btn-warning">Approve</a></td>
         <td><a href="?action=reject&id={{i['coach_id']}}" class="btn btn-danger">Reject</a></td>

@@ -1,0 +1,36 @@
+{% include 'user_header.html' %}
+
+<div class="top-div"></div>
+<center>
+    <br><br>
+    {% if data['count'] >= 1 %}
+    <h5 class="hd">View Fixtures</h5>
+    <table class="table  tbl-new" style="width: 900px;">
+        <tr align="center">
+            <th>index</th>
+            <th>Fixture</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Team 1</th>
+            <th>Team 2</th>
+
+            
+        </tr>
+        {% for row in data['res'] %}
+        <tr class="boxrow" align="center">
+            <td>{{ loop.index }}</td>
+            <td>{{ row['fixture'] }}</td>
+            <td>{{ row['date'] }}</td>
+            <td>{{ row['time'] }}</td>
+            <td>{{ row['team1'] }}</td>
+            <td>{{ row['team2'] }}</td>
+          
+            <!-- <td><a class="btn btn-info" href="?action=update&fid={{ row['fixture_id'] }}">Update</a></td> -->
+            <!-- <td><a class="btn btn-danger" onclick="return confirm('Are You Sure!')" href="?action=delete&fid={{ row['fixture_id'] }}">Delete</a></td> -->
+                   </tr>
+                   
+        {% endfor %}
+    </table>
+    {% endif %}
+</center>
+{% include 'footer.html' %}

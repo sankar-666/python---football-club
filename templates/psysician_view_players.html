@@ -4,7 +4,7 @@
     <h3>View Players</h3>
     <div class="top-div"></div>
     
-<table class="table" style="width: 500px;">
+<table class="table" style="width: 900px;">
     <tr>
         <th>#</th>
         <th>First Name</th>
@@ -21,6 +21,8 @@
         <td>{{i['place']}}</td>
         <td>{{i['phone']}}</td>
         <td>{{i['email']}}</td>
+        <td><a href="physiochat?lid={{i['login_id']}}" class="btn btn-success">Chat</a></td>
+
         <!-- <td><a href="?action=update&id={{i['player_id']}}" class="btn btn-warning">Update</a></td> -->
         <!-- <td><a href="?action=delete&id={{i['p/layer_id']}}" class="btn btn-danger">Delete</a></td> -->
     </tr>

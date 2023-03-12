@@ -32,7 +32,7 @@ def updateprofilepsy():
 @physio.route('/viewplayers')
 def viewplayers():
     data={}
-    q="select * from player"
+    q="select * from player where club_id=(select club_id from psysician where psysician_id='%s')"%(session['psyid'])
     data['player']=select(q)
     
     return render_template('psysician_view_players.html',data=data)
@@ -41,7 +41,7 @@ def viewplayers():
 def viewcoach():
     data={}
         
-    q="select * from coach  inner join login using(login_id)"
+    q="select * from coach  inner join login using(login_id) where club_id=(select club_id from psysician where psysician_id='%s')"%(session['psyid'])
     data['coach']=select(q)
     
     return render_template('physio_view_coach.html',data=data)
@@ -67,3 +67,67 @@ def  viewconsluted():
         return redirect(url_for('physio.viewconsluted'))
     
     return render_template('physio_view_consulted.html',data=data)
+
+
+@physio.route('/viewpracticesection')
+def viewpracticesection():
+    data={}
+        
+    q="select *,concat(coach.fname,coach.lname) as coach,practice.place as place from practice  inner join coach using(coach_id) inner join club using(club_id) where club_id=(select club_id from psysician where psysician_id='%s')"%(session['psyid'])
+    data['practice']=select(q)
+    
+    return render_template('physio_view_practicesec.html',data=data)
+
+
+
+@physio.route('/physiochat',methods=['post','get'])
+def physiochat():
+    data={}
+    uid=session['loginid']
+    did=request.args['lid']
+    if 'btn' in request.form:
+        name=request.form['txt']
+    
+        q="insert into message values(NULL,'%s','%s','%s',now())"%(uid,did,name)
+        insert(q)
+        return redirect(url_for("physio.physiochat",lid=did))
+    q="SELECT * FROM message WHERE (sender_id='%s' AND receiver_id='%s') OR (sender_id='%s' AND receiver_id=('%s')) order by message_id"%(uid,did,did,uid)
+    # q="select * from chats where senderid='%s' and receiverid=( select login_id from doctors where doctor_id='%s' )"%(uid,did)
+    print(q)
+    res=select(q)
+    data['ress']=res
+    
+    return render_template("physio_chat.html",data=data,uid=uid)
+
+
+@physio.route('/physio_complaints',methods=['get','post'])
+def physio_complaints():
+    data={}
+    if 'btn' in request.form:
+        comp=request.form['comp']
+        q="insert into complaint values (null,'%s','pending',curdate(),'%s','physio')"%(comp,session['loginid'])
+        insert(q)
+        flash("Complaint Added!")
+        return redirect(url_for('physio.physio_complaints'))
+    
+    q="select * from complaint where sender_id='%s'"%(session['loginid'])
+    data['res']=select(q)   
+    return render_template('physio_complaints.html',data=data)
+
+
+
+@physio.route('/physio_view_news')
+def physio_view_news():
+    data={}
+    q="select * from news"
+    data['res']=select(q)   
+    return render_template('physio_view_news.html',data=data)
+
+
+
+@physio.route('/physio_view_rank')
+def physio_view_rank():
+    data={}
+    q="select * from rank inner join player using (player_id)"
+    data['res']=select(q)   
+    return render_template('physio_view_rank.html',data=data)

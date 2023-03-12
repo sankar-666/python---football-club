@@ -1,20 +1,16 @@
-{% include 'clubadminheader.html' %}
+{% include 'publicheader.html' %}
 
-
-   
+ 
 <center>
     <div style="margin: 100px auto;">
         <form action="" method="post" style="width: 500px;" enctype="multipart/form-data">
-            <h1>NUTRITIONINST ADD</h1>
+            <h1>Psysician Register</h1>
             <table class="table">
                 <tr>
-                    <th>Firstname</th>
+                    <th>Psysician Name</th>
                     <td><input type="text" required class="form-control" name="fname" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['fname']}}{% endif %}"></td>
                 </tr>
-                <tr>
-                    <th>Lastname</th>
-                    <td><input type="text" required class="form-control" name="lname" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['lname']}}{% endif %}"></td>
-                </tr>
+               
                 <tr>
                     <th>Phone</th>
                     <td><input type="text" maxlength="10" required class="form-control" name="phone" id="" value="{% if data['coachup'] %}{{data['coachup'][0]['phone']}}{% endif %}"></td>
@@ -55,46 +51,5 @@
     </div>
 </center>
 
-
-
-
-
-
-
-<center>
-    <h2>VIEW NUTRITIONINST</h2>
-    
-<table class="table" style="width: 900px;">
-    <tr>
-        <th>#</th>
-        <th></th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Place </th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Date OF Birth</th>
-    </tr>
-    {% for i in data['nutri'] %}
-    <tr>
-        <td>{{loop.index}}</td>
-        <td><img src="/{{i['photo']}}" style="height: 100px;width: 100px;" alt=""></td>
-        <td>{{i['fname']}}</td>
-        <td>{{i['lname']}}</td>
-        <td>{{i['place']}}</td>
-        <td>{{i['phone']}}</td>
-        <td>{{i['email']}}</td>
-        <td>{{i['dob']}}</td>
-        <td><a href="?action=update&id={{i['nutretion_id']}}" class="btn btn-warning">Update</a></td>
-        {% if i['usertype']=='pending' %}
-        <td><a href="?action=approve&id={{i['nutretion_id']}}" class="btn btn-warning">Approve</a></td>
-        <td><a href="?action=reject&id={{i['nutretion_id']}}" class="btn btn-danger">Reject</a></td>
-        {% endif %}
-    </tr>
-
-    {% endfor %}
-</table>
-
-</center>
 
 {% include 'footer.html' %}

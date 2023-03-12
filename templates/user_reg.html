@@ -1,0 +1,67 @@
+{% include 'publicheader.html' %}
+
+<div style="display: flex;justify-content: center;align-items: center;">
+
+    <div>
+        <form action="" method="post" id="reg" enctype="multipart/form-data">
+            <h2>User Registration</h2>
+         
+            <table class="table">
+                <tr>
+                    <th>Firstname</th>
+                    <td><input type="text" class="form-control"   required  name="fname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Lastname</th>
+                    <td><input type="text" required class="form-control"   name="lname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Place</th>
+                    <td><input type="text" required class="form-control"   name="place" id=""></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td><input type="number"   required class="form-control"  name="phone" id="phone" pattern="[0-9]{10}"></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="email" required  class="form-control"  name="email" id=""></td>
+                </tr>
+                <tr>
+                    <th>Aadhar No</th>
+                    <td><input type="nnumber"  class="form-control"   name="adhar" id="" pattern="[0-9]{14}"></td>
+                </tr>
+                
+                <tr>
+                    <th>Date Of Birth</th>
+                    <td><input type="date"   class="form-control" name="dob" id=""></td>
+                </tr>
+                <tr>
+                    <th>Upload Photo</th>
+                    <td><input type="file" class="form-control"  name="photo"></td>
+                </tr>
+                <tr>
+                    <th>Upload Certificate</th>
+                    <td><input type="file" class="form-control"  name="pic"></td>
+                </tr>
+                <tr>
+                    <th>Username</th>
+                    <td><input type="text" class="form-control"  required  name="uname" id=""></td>
+                </tr>
+                 <tr>
+                    <th>Password</th>
+                    <td><input type="password"  class="form-control" required  name="passw" id=""></td>
+                </tr>
+                <tr>
+                  
+                    <th><input type="submit" name="submit" value="Save" class="btn btn-danger" id=""></th>
+                </tr>
+             
+            </table>
+               
+        </form>
+    </div>
+
+</div>
+
+{% include 'footer.html' %}

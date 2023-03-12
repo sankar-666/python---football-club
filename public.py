@@ -62,7 +62,16 @@ def login():
                 if val1:
                     session['psyid']=val1[0]['psysician_id']
                     flash("Login Success")
-                    return redirect(url_for("physio.physiohome"))     
+                    return redirect(url_for("physio.physiohome")) 
+                
+                    
+            elif utype == "user":
+                q="select * from user where login_id='%s'"%(session['loginid'])
+                val1=select(q)
+                if val1:
+                    session['uid']=val1[0]['user_id']
+                    flash("Login Success")
+                    return redirect(url_for("user.userhome"))     
             
             else:
                 flash("failed try again")
@@ -143,6 +152,9 @@ def clubreg():
         club=request.form['club']
         place=request.form['place']
         phone=request.form['phone']
+        photo=request.files['photo']
+        path="static/uploads/"+str(uuid.uuid4())+photo.filename
+        photo.save(path)
         uname=request.form['uname']
         passw=request.form['passw']
         q="select * from login where username='%s'"%(uname)
@@ -152,7 +164,7 @@ def clubreg():
         else:
             q="insert into login values(null,'%s','%s'.'pending')"%(uname,passw)
             res=insert(q)
-            q="insert into club values(null,'%s','%s','%s','%s')"%(res,club,place,phone)
+            q="insert into club values(null,'%s','%s','%s','%s','%s')"%(res,club,place,phone,path)
             insert(q)
             flash('registration Successfull')
             return redirect(url_for("public.login"))
@@ -164,23 +176,116 @@ def clubreg():
 
 @public.route('/psyreg',methods=['get','post'])
 def psyreg():
-    if 'register' in request.form:
-        name=request.form['name']
+    id=request.args['id']
+    data={}
+    if 'btn' in request.form:
+        fname=request.form['fname']
+   
         place=request.form['place']
         phone=request.form['phone']
         email=request.form['email']
+        dob=request.form['dob']
+        photo=request.files['photo']
+        path="static/uploads/"+str(uuid.uuid4())+photo.filename
+        photo.save(path)
+       
+        pwd=request.form['pwd']
         uname=request.form['uname']
-        passw=request.form['passw']
+      
+
         q="select * from login where username='%s'"%(uname)
         res=select(q)
         if res:
             flash("This Username already exist!, try register with new one.")
         else:
-            q="insert into login values(null,'%s','%s'.'pending')"%(uname,passw)
-            res=insert(q)
-            q="insert into psysician values(null,'%s','%s','%s','%s')"%(res,name,place,phone,email)
+            q="insert into login values(null,'%s','%s','pending')"%(uname,pwd)
+            lid=insert(q)
+            q="insert into psysician values (NULL,'%s','%s','%s','%s','%s','%s','%s','%s')"%(lid,session['clubid'],fname,place,phone,email,path,dob)
             insert(q)
-            flash('registration Successfull')
-        return redirect(url_for("public.login"))
+            flash("Registration successfull")
+            return redirect(url_for("public.login"))
         
-    return render_template('club_register.html')
+    return render_template('phy_reg.html',data=data)
+
+
+
+
+@public.route('/clubs')
+def clubs():
+    data={}
+    q="select * from club"
+    res=select(q)
+    data['club']=res
+    
+    return render_template('view_clubs.html',data=data)
+
+
+@public.route('/viewdetails')
+def viewdetails():
+    data={}
+    id=request.args['id']
+    q="select * from club where club_id='%s'"%(id)
+    data['club']=select(q)
+    return render_template('view_club_details.html',data=data)
+
+
+
+@public.route('/userreg',methods=['get','post'])
+def userreg():
+    id=request.args['id']
+    if 'submit' in request.form:
+        fname=request.form['fname']
+        lname=request.form['lname']
+        place=request.form['place']
+        phone=request.form['phone']
+        email=request.form['email']
+        dob=request.form['dob']
+        adhr=request.form['adhar']
+        uname=request.form['uname']
+        passw=request.form['passw']
+        photo=request.files['photo']
+        path="static/uploads/"+str(uuid.uuid4())+photo.filename
+        photo.save(path)
+        pic=request.files['pic']
+        path2="static/uploads/"+str(uuid.uuid4())+pic.filename
+        pic.save(path)
+        
+        q="insert into login values(null,'%s','%s','pending')"%(uname,passw)
+        res=insert(q)
+        q="insert into user values(null,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(res,id,fname,lname,place,phone,email,adhr,path,dob,path2)
+        insert(q)
+        return redirect(url_for('public.login'))
+        
+    return render_template('user_reg.html')
+
+
+@public.route('/playerreg',methods=['get','post'])
+def playerreg():
+    id=request.args['id']
+    data={}
+    
+    if 'register' in request.form:
+        fname=request.form['fname']
+        lname=request.form['lname']
+        place=request.form['place']
+        phone=request.form['phone']
+        email=request.form['email']
+        dob=request.form['dob']
+        adhr=request.form['adhr']
+        photo=request.files['photo']
+        path="static/uploads/"+str(uuid.uuid4())+photo.filename
+        photo.save(path)
+        uname=request.form['uname']
+        passw=request.form['passw']
+        import random
+
+        rno = random.randint(100000, 999999)
+        
+        q="insert into login values(null,'%s','%s','player')"%(uname,passw)
+        res=insert(q)
+        q="insert into player values(null,'%s','%s','%s','%s','%s','%s','%s','%s','pending','%s','%s','%s')"%(res,id,fname,lname,place,phone,email,rno,adhr,path,dob)
+        insert(q)
+        flash("registration Successfull")
+        return redirect(url_for('public.login'))
+    
+    return render_template('player_reg.html',data=data)

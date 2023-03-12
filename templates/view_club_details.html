@@ -1,0 +1,71 @@
+{% include 'publicheader.html' %}
+    
+<h2 style="margin-top: 100px;" align="center">View Club Details</h2>
+
+    <div class="mian-div">
+        <div class="img-div">
+            <img src="/{{data['club'][0]['photo']}}" alt="hello">
+        </div>
+        <div class="details">
+            <p>Club name: <span> {{data['club'][0]['club']}}</span></p>
+            <p>Place: <span> {{data['club'][0]['place']}} </span></p>
+            <p>Contact Info: <span> {{data['club'][0]['phone']}} </span></p>
+
+        </div>
+        <div class="join">
+            <span>join With us</span><br>
+            <a href="psyreg?id={{data['club'][0]['club_id']}}" class="btn btn-success">Register as Psysician</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="nutritionaist_reg?id={{data['club'][0]['club_id']}}" class="btn btn-success">Register as Nutritionist </a>&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="userreg?id={{data['club'][0]['club_id']}}" class="btn btn-success">Register as user</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+             <a href="playerreg?id={{data['club'][0]['club_id']}}" class="btn btn-success">Register as player</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+           <!-- <a href="psyreg">Register as Psysician</a>&nbsp&nbsp&nbsp&nbsp&nbsp -->
+
+        </div>
+    </div>
+
+
+
+
+
+<style>
+    body{
+        
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .mian-div{
+        width: 100%;
+        flex-direction: column;
+        display: flex;
+        padding: 5%;
+        
+
+    }
+    .img-div{
+        width: 100%;
+        
+        
+    }
+    img{
+        height: 450px;
+        width: 100%;
+    }
+    
+    details{
+        width: 90%;
+
+        
+    }
+    p{
+        font-size: 40px;
+        color: green;
+    }
+    span{
+        color: red;
+    }
+    .join a{
+       
+        padding: 1.5rem;
+    }
+</style>

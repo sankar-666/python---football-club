@@ -1,0 +1,32 @@
+{% include 'physioheader.html' %}
+
+<center>
+    <div class="top-div"></div>
+    <h3>View Practice Sections</h3>
+    
+<table class="table" style="width: 900px;">
+    <tr>
+        <th>#</th>
+        <th>Coach Name</th>
+        <th>Practice</th>
+        <th>Place </th>
+        <th>Date</th>
+        <th>Time</th>
+    </tr>
+    {% for i in data['practice'] %}
+    <tr>
+        <td>{{loop.index}}</td>
+        <td>{{i['coach']}}</td>
+        <td>{{i['practice']}}</td>
+        <td>{{i['place']}}</td>
+        <td>{{i['date']}}</td>
+        <td>{{i['time']}}</td>
+        <!-- <td><a href="?action=update&id={{i['player_id']}}" class="btn btn-warning">Update</a></td> -->
+        <!-- <td><a href="?action=delete&id={{i['p/layer_id']}}" class="btn btn-danger">Delete</a></td> -->
+    </tr>
+
+    {% endfor %}
+</table>
+</center>
+
+{% include 'footer.html' %}

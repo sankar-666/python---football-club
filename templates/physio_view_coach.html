@@ -3,7 +3,7 @@
     <div class="top-div"></div>
     <h2>View Coach</h2>
     
-<table class="table" style="width: 500px;">
+<table class="table" style="width: 900px;">
     <tr>
         <th>#</th>
         <th>First Name</th>
@@ -20,6 +20,7 @@
         <td>{{i['place']}}</td>
         <td>{{i['phone']}}</td>
         <td>{{i['email']}}</td>
+        <td><a href="physiochat?lid={{i['login_id']}}" class="btn btn-success">Chat</a></td>
         <!-- {% if i['usertype']=='pending' %}
         <td><a href="?action=approve&id={{i['coach_id']}}" class="btn btn-warning">Approve</a></td>
         <td><a href="?action=reject&id={{i['coach_id']}}" class="btn btn-danger">Reject</a></td>
