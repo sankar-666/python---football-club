@@ -8,11 +8,10 @@ api=Blueprint('api',__name__)
 
 
 
-@api.route('/uploadfile',methods=['get','post'])
-def uploadfile():
+@api.route('/coachreg',methods=['get','post'])
+def coachreg():
     data={}
     image=request.files['image'];
-    lid=request.form['lid'];
     path="static/uploads/"+str(uuid.uuid4())+image.filename
     image.save(path)
 
@@ -34,10 +33,10 @@ def uploadfile():
         data['status']='duplicate'
         data['method']='reg'
     else:
-        q="insert into login values(null,'%s','%s','user')"%(uname,passw)
+        q="insert into login values(null,'%s','%s','coach')"%(uname,passw)
         print(q)
         id=insert(q)
-        q="insert into user values(null,'%s','%s','%s','%s','%s','%s')"%(id,fname,lname,place,phone,email)
+        q="insert into coach values(null,'%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(id,clubid,fname,lname,place,phone,email,path,dob)
         print(q)
         insert(q)
         data['method']='reg'
@@ -63,6 +62,27 @@ def viewclub():
         data['status']='failed'
        
     return str(data)
+
+
+
+@api.route('/coachviewprofile')
+def coachviewprofile():
+    data={}
+    lid=request.args['lid']
+  
+
+    q="select *,concat(fname,'',lname) as name from coach where login_id='%s'"%(lid)
+    res=select(q)
+    if res:
+        data['status']='success'
+        data['data']=res
+    else:
+        data['status']='failed'
+    data['method']="coachviewprofile"
+
+    return str(data)
+
+
 
 
 @api.route('/login')
@@ -180,6 +200,39 @@ def player_view_coach():
 
     return str(data)
 
+@api.route('/coachviewplayer')
+def coachviewplayer():
+    data={} 
+    lid=request.args['lid']
+    q="select *,concat(fname,'',lname) as coach from player where club_id=(select club_id from coach where login_id='%s')"%(lid)
+    print(q)
+    res=select(q)
+    if res:
+        data['status']='success'
+        data['data']=res
+    else:
+        data['status']='failed'
+    data['method']="coachviewplayer"
+
+    return str(data)
+
+
+@api.route('/practice')
+def practice():
+    data={}
+    
+    practice=request.args['practice']
+    place=request.args['place']
+    date=request.args['date']
+    time=request.args['time']
+    lid=request.args['lid']
+    
+    q="insert into practice values(null,(select coach_id from coach where login_id='%s'),'%s','%s','%s','%s')"%(lid,practice,place,date,time)
+    insert(q)
+    data['status']='success'
+    
+    return str(data)
+
 
 @api.route('/player_view_practise')
 def player_view_practise():
@@ -195,6 +248,23 @@ def player_view_practise():
     else:
         data['status']='failed'
     data['method']="player_view_practise"
+
+    return str(data)
+
+@api.route('/coachviewpractice')
+def coachviewpractice():
+    data={}
+    lid=request.args['lid']
+  
+
+    q="select *,concat(fname,'',lname) as coach from coach inner join practice using (coach_id) where coach_id=(select coach_id from coach where login_id='%s')"%(lid)
+    res=select(q)
+    if res:
+        data['status']='success'
+        data['data']=res
+    else:
+        data['status']='failed'
+    data['method']="coachviewpractice"
 
     return str(data)
 
@@ -345,3 +415,16 @@ def player_add_consulted():
     data['status']="success"
     data['method']="player_add_consulted"
     return str(data)
+
+
+
+@api.route('/practiceddelete')
+def practiceddelete():
+    data={}
+    prid=request.args['prid']
+    
+    q="delete from practice where practice_id='%s'"%(prid)
+    delete(q)
+    data['status']='success'
+    return str(data)
+    
