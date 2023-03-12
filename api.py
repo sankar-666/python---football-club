@@ -47,4 +47,58 @@ def login():
     if res:
         data['status']='success'
         data['data']=res
+    else:
+        data['status']='failed'
+        
+    return str(data)
+
+
+@api.route('/player_my_profile')
+def player_my_profile():
+    data={}
+    lid=request.args['lid']
+  
+
+    q="select *,concat(fname,'',lname) as name from player where login_id='%s'"%(lid)
+    res=select(q)
+    if res:
+        data['status']='success'
+        data['data']=res
+    else:
+        data['status']='failed'
+    data['method']="player_my_profile"
+
+    return str(data)
+
+@api.route('/player_view_news')
+def player_view_news():
+    data={}
+
+    q="select * from news"
+    res=select(q)
+    if res:
+        data['status']='success'
+        data['data']=res
+    else:
+        data['status']='failed'
+    data['method']="player_view_news"
+
+    return str(data)
+
+
+@api.route('/player_view_practise')
+def player_view_practise():
+    data={}
+    lid=request.args['lid']
+  
+
+    q="select *,concat(fname,'',lname) as coach from coach inner join practice using (coach_id)"
+    res=select(q)
+    if res:
+        data['status']='success'
+        data['data']=res
+    else:
+        data['status']='failed'
+    data['method']="player_view_practise"
+
     return str(data)

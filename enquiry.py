@@ -207,7 +207,7 @@ def enquiry_view_nutritionalist():
 
 
 @enquiry.route('/enquiry_view_coach')
-def enquiry_view_coach():
+def enquiry_view_coach(): 
     data={}
     q="select * from coach"
     data['res']=select(q)   
