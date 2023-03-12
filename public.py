@@ -111,6 +111,10 @@ def nutritionaist_reg():
         phone=request.form['phone']
         email=request.form['email']
         place=request.form['place']
+        dob=request.form['dob']
+        photo=request.files['photo']
+        path="static/uploads/"+str(uuid.uuid4())+photo.filename
+        photo.save(path)
        
         pwd=request.form['pwd']
         uname=request.form['uname']
@@ -123,7 +127,7 @@ def nutritionaist_reg():
         else:
             q="insert into login values(null,'%s','%s','pending')"%(uname,pwd)
             lid=insert(q)
-            q="insert into nutretion values (NULL,'%s','%s','%s','%s','%s','%s')"%(lid,fname,lname,place,phone,email)
+            q="insert into nutretion values (NULL,'%s','%s','%s','%s','%s','%s','%s','%s')"%(lid,fname,lname,place,phone,email,path,dob)
             insert(q)
             flash("Registration successfull")
             return redirect(url_for("public.login"))
