@@ -46,7 +46,23 @@ def login():
                     session['pid']=val8[0]['player_id']
                     flash("Login Success")
                     return redirect(url_for("player.playerhome"))
-               
+                
+            elif utype == "cadmin":
+                q="select * from club where login_id='%s'"%(session['loginid'])
+                val1=select(q)
+                if val1:
+                    session['clubid']=val1[0]['club_id']
+                    flash("Login Success")
+                    return redirect(url_for("clubadmin.clubhome"))   
+                
+                
+            elif utype == "psysician":
+                q="select * from psysician where login_id='%s'"%(session['loginid'])
+                val1=select(q)
+                if val1:
+                    session['psyid']=val1[0]['psysician_id']
+                    flash("Login Success")
+                    return redirect(url_for("physio.physiohome"))     
             
             else:
                 flash("failed try again")
@@ -83,7 +99,6 @@ def enquiry_reg():
             return redirect(url_for("public.login"))
     return render_template("enquiry_reg.html")
 
-
 @public.route("/nutritionaist_reg",methods=['get','post'])
 def nutritionaist_reg():
     if 'btn' in request.form:
@@ -109,3 +124,55 @@ def nutritionaist_reg():
             flash("Registration successfull")
             return redirect(url_for("public.login"))
     return render_template("nutritionaist_reg.html")
+
+
+
+
+
+@public.route('/clubreg',methods=['get','post'])
+def clubreg():
+    if 'register' in request.form:
+        club=request.form['club']
+        place=request.form['place']
+        phone=request.form['phone']
+        uname=request.form['uname']
+        passw=request.form['passw']
+        q="select * from login where username='%s'"%(uname)
+        res=select(q)
+        if res:
+            flash("This Username already exist!, try register with new one.")
+        else:
+            q="insert into login values(null,'%s','%s'.'pending')"%(uname,passw)
+            res=insert(q)
+            q="insert into coach values(null,'%s','%s','%s','%s')"%(res,club,place,phone)
+            insert(q)
+            flash('registration Successfull')
+            return redirect('public.login')
+        
+    return render_template('club_register.html')
+
+
+
+
+@public.route('/psyreg',methods=['get','post'])
+def psyreg():
+    if 'register' in request.form:
+        name=request.form['name']
+        place=request.form['place']
+        phone=request.form['phone']
+        email=request.form['email']
+        uname=request.form['uname']
+        passw=request.form['passw']
+        q="select * from login where username='%s'"%(uname)
+        res=select(q)
+        if res:
+            flash("This Username already exist!, try register with new one.")
+        else:
+            q="insert into login values(null,'%s','%s'.'pending')"%(uname,passw)
+            res=insert(q)
+            q="insert into psysician values(null,'%s','%s','%s','%s')"%(res,name,place,phone,email)
+            insert(q)
+            flash('registration Successfull')
+        return redirect('public.login')
+        
+    return render_template('club_register.html')

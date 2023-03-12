@@ -1,0 +1,32 @@
+{% include 'physioheader.html' %}
+
+<center>
+    <h2>Physio Profile</h2>
+    <form action=""  method="post">
+
+        <table class="table" style="width: 500px;">
+            <tr>
+                <th> Name</th>
+                <td><input type="text" name="name" class="form-control" required value="{{data['res'][0]['psysician']}}"></td>
+            </tr>
+        <tr>
+            <th>Place</th>
+            <td><input type="text" name="place" class="form-control" required value="{{data['res'][0]['place']}}"></td>
+        </tr>
+        <tr>
+            <th>phone</th>
+            <td><input type="text" name="phone" pattern="[0-9]{10}" class="form-control" required value="{{data['res'][0]['phone']}}"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><input type="email" name="email"  class="form-control" required value="{{data['res'][0]['email']}}"></td>
+        </tr>
+        
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="update" value="Update Details" class="btn btn-success"></td>
+        </tr>
+    </table>
+</form>
+</center>
+
+{% include 'footer.html' %}

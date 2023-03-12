@@ -1,0 +1,32 @@
+{% include 'physioheader.html' %}
+
+<center>
+    <h3>View Players</h3>
+
+    
+<table class="table" style="width: 500px;">
+    <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Place </th>
+        <th>Phone</th>
+        <th>Email</th>
+    </tr>
+    {% for i in data['player'] %}
+    <tr>
+        <td>{{loop.index}}</td>
+        <td>{{i['fname']}}</td>
+        <td>{{i['lname']}}</td>
+        <td>{{i['place']}}</td>
+        <td>{{i['phone']}}</td>
+        <td>{{i['email']}}</td>
+        <!-- <td><a href="?action=update&id={{i['player_id']}}" class="btn btn-warning">Update</a></td> -->
+        <!-- <td><a href="?action=delete&id={{i['p/layer_id']}}" class="btn btn-danger">Delete</a></td> -->
+    </tr>
+
+    {% endfor %}
+</table>
+</center>
+
+{% include 'footer.html' %}

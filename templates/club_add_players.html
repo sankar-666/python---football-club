@@ -1,0 +1,74 @@
+{% include 'clubadminheader.html' %}
+
+
+<center>
+    <h2>Club Player Register</h2>
+    <form action="" method="post">
+
+        <table class="table" style="width: 500px;">
+            <tr>
+                <th>Fiirst Name</th>
+                <td><input type="text" name="fname" class="form-control" required value="{% if data['playerupd'] %}{{data['playerupd'][0]['fname']}}{% endif %}"></td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+            <td><input type="text" name="lname" class="form-control" required value="{% if data['playerupd'] %}{{data['playerupd'][0]['lname']}}{% endif %}"></td>
+        </tr>
+            <tr>
+                <th>Place</th>
+            <td><input type="text" name="place" class="form-control" required value="{% if data['playerupd'] %}{{data['playerupd'][0]['place']}}{% endif %}"></td>
+        </tr>
+        <tr>
+            <th>phone</th>
+            <td><input type="text" name="phone" pattern="[0-9]{10}" class="form-control" required value="{% if data['playerupd'] %}{{data['playerupd'][0]['phone']}}{% endif %}"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+        <td><input type="email" name="email" class="form-control" required value="{% if data['playerupd'] %}{{data['playerupd'][0]['email']}}{% endif %}"></td>
+    </tr>
+    {% if data['playerupd'] %}
+    {% else %}
+        <tr>
+            <th>User Name</th>
+            <td><input type="text" name="uname" class="form-control" required></td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td><input type="password" name="passw" class="form-control" required></td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td colspan="2" align="center"><input type="submit" {% if data['playerupd'] %} name="edit" value="update" {% else %} name="register" value="Register" {% endif %} class="btn btn-success"></td>
+        </tr>
+    </table>
+</form>
+
+<table class="table" style="width: 500px;">
+    <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Place </th>
+        <th>Phone</th>
+        <th>Email</th>
+    </tr>
+    {% for i in data['player'] %}
+    <tr>
+        <td>{{loop.index}}</td>
+        <td>{{i['fname']}}</td>
+        <td>{{i['lname']}}</td>
+        <td>{{i['place']}}</td>
+        <td>{{i['phone']}}</td>
+        <td>{{i['email']}}</td>
+        <td><a href="?action=update&id={{i['player_id']}}" class="btn btn-warning">Update</a></td>
+        <td><a href="?action=delete&id={{i['player_id']}}" class="btn btn-danger">Delete</a></td>
+    </tr>
+
+    {% endfor %}
+</table>
+
+
+</center>
+
+
+{% include 'footer.html' %}

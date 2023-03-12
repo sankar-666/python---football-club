@@ -1,0 +1,43 @@
+{% include 'physioheader.html' %}
+
+<center>
+
+    {% if data['reply'] %}
+<form action="" method="post">
+    <table class="table" style="width: 600px;">
+        <tr>
+            <th>Reply</th>
+            <td><input type="text" name="msg" class="form-control" required></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="send" value="Send" class="btn btn-success"></td>
+        </tr>
+    </table>
+
+</form>
+
+    {% else %}
+    <h3>Consluted</h3>
+    <table class="table" style="width: 600px;">
+        <tr>
+            <th>#</th>
+            <th>Requester Name</th>
+            <th>Consulted For</th>
+            <th>Replay</th>
+        </tr>
+        {% for i in data['res'] %}
+        <tr>
+            <td>{{loop.index}}</td>
+            <td>{{i['nameval']}}</td>
+            <td>{{i['consulted']}}</td>
+            <td>{{i['details']}}</td>
+            {% if i['details']=='pending' %}
+            <td><a href="?reply={{i['consultation_id']}}">Replay</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</center>
+
+{% include 'footer.html' %}
