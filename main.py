@@ -3,6 +3,8 @@ from public import public
 from admin import admin
 from player import player
 from enquiry import enquiry
+from api import api
+
 from nutritionaist import nutritionaist
 
 app=Flask(__name__)
@@ -12,6 +14,7 @@ app.secret_key="prayulla"
 app.register_blueprint(admin,url_prefix="/admin")
 app.register_blueprint(player,url_prefix="/player")
 app.register_blueprint(enquiry,url_prefix="/enquiry")
+app.register_blueprint(api,url_prefix="/api")
 app.register_blueprint(nutritionaist,url_prefix="/nutritionaist")
 app.register_blueprint(public)
 
