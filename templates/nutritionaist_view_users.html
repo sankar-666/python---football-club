@@ -1,0 +1,33 @@
+{% include 'nutritionaistheader.html' %}
+
+<br><br>
+<div class="top-div"></div>
+<center>
+<h1>View Players</h1>
+<table class="table table-striped tbl-new">
+    <tr>
+        <th>Index No</th>
+        <th>Users</th>
+        <th>Photo</th>
+        <th>Place</th>
+        <th>Phone</th>
+        <th>Email</th>
+  
+        
+    </tr>
+    {% for row in data['res'] %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row['fname'] }}{{ row['lname'] }}</td>
+        <td><img src="/{{ row['photo'] }}" width="100" height="100" alt=""></td>
+        <td>{{ row['place'] }}</td>
+        <td>{{ row['phone'] }}</td>
+        <td>{{ row['email'] }}</td>
+        <td><a href="nutritionaist_chat?did={{row['login_id']}}">Chat</a></td>
+       
+    </tr>
+    {% endfor %}
+</table>
+</center>
+
+{% include 'footer.html' %}

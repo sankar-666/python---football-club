@@ -8,11 +8,32 @@ admin=Blueprint('admin',__name__)
 def adminhome():
     return render_template('adminhome.html')
 
-@admin.route('/admin_manage_club')
+@admin.route('/admin_manage_club',methods=['get','post'])
 def admin_manage_club():
     data={}
     q="select * from club inner join login using (login_id)"
     data['res']=select(q)
+
+    if 'register' in request.form:
+        club=request.form['club']
+        place=request.form['place']
+        phone=request.form['phone']
+        uname=request.form['uname']
+        passw=request.form['passw']
+        image=request.files['image']
+        path="static/uploads/"+str(uuid.uuid4())+image.filename
+        image.save(path)
+        q="select * from login where username='%s'"%(uname)
+        res=select(q)
+        if res:
+            flash("This Username already exist!, try register with new one.")
+        else:
+            q="insert into login values(null,'%s','%s','clubadmin')"%(uname,passw)
+            res=insert(q)
+            q="insert into club values(null,'%s','%s','%s','%s','%s')"%(res,club,place,phone,path)
+            insert(q)
+            flash('Club added Successfull')
+            return redirect(url_for('admin.admin_manage_club'))
 
     if 'action' in request.args:
         action=request.args['action']
@@ -39,6 +60,31 @@ def admin_manage_enquiry():
     data={}
     q="select * from enquiry inner join login using (login_id)"
     data['res']=select(q)
+
+    if 'btn' in request.form:
+        name=request.form['name']
+        phone=request.form['phone']
+        email=request.form['email']
+        dob=request.form['dob']
+        photo=request.files['photo']
+        path="static/uploads/"+str(uuid.uuid4())+photo.filename
+        photo.save(path)
+       
+        pwd=request.form['pwd']
+        uname=request.form['uname']
+      
+
+        q="select * from login where username='%s'"%(uname)
+        res=select(q)
+        if res:
+            flash("This Username already exist!, try register with new one.")
+        else:
+            q="insert into login values(null,'%s','%s','pending')"%(uname,pwd)
+            lid=insert(q)
+            q="insert into enquiry values (NULL,'%s','%s','%s','%s','%s','%s')"%(lid,name,phone,email,path,dob)
+            insert(q)
+            flash("Registration successfull")
+            return redirect(url_for("admin.admin_manage_enquiry"))
 
     if 'action' in request.args:
         action=request.args['action']

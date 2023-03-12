@@ -3,53 +3,53 @@
 <div style="display: flex;justify-content: center;align-items: center;">
 
     <div>
-        <form action="" method="post">
+        <form id="reg" action="" method="post">
             <h2>My Profile</h2>
             {% if data['raw'] %}
-            <table>
+            <table class="table">
                 <tr>
                     <th>Firstname</th>
-                    <td><input type="text"  value="{{ data['res'][0]['fname'] }}" required  name="fname" id=""></td>
+                    <td><input type="text" class="form-control"  value="{{ data['res'][0]['fname'] }}" required  name="fname" id=""></td>
                 </tr>
                 <tr>
                     <th>Lastname</th>
-                    <td><input type="text" required value="{{ data['res'][0]['lname'] }}" name="lname" id=""></td>
+                    <td><input type="text" class="form-control" required value="{{ data['res'][0]['lname'] }}" name="lname" id=""></td>
                 </tr>
                 <tr>
                     <th>Place</th>
-                    <td><input type="text" required value="{{ data['res'][0]['place'] }}" name="place" id=""></td>
+                    <td><input type="text" class="form-control" required value="{{ data['res'][0]['place'] }}" name="place" id=""></td>
                 </tr>
                 <tr>
                     <th>Phone</th>
-                    <td><input type="number"  value="{{ data['res'][0]['phone'] }}"  required name="phone" id="phone"></td>
+                    <td><input type="number" class="form-control"  value="{{ data['res'][0]['phone'] }}"  required name="phone" id="phone"></td>
                 </tr>
                 <tr>
                     <th>Email</th>
-                    <td><input type="text"  value="{{ data['res'][0]['email'] }}" required  name="email" id=""></td>
+                    <td><input type="text" class="form-control"  value="{{ data['res'][0]['email'] }}" required  name="email" id=""></td>
                 </tr>
                 <tr>
                   
-                    <th><input type="submit" name="update" value="Save" class="btn btn-danger" id=""></th>
+                    <th><input type="submit" name="update" value="Save" class="btn btn-success" id=""></th>
                 </tr>
             </table>
                 {% else %}
             
-            <table>
+            <table class="table">
                 <tr>
                     <th>Firstname</th>
-                    <td><input type="text" disabled value="{{ data['res'][0]['fname'] }}" name="" id=""></td>
+                    <td><input type="text" class="form-control" disabled value="{{ data['res'][0]['fname'] }}" name="" id=""></td>
                 </tr>
                 <tr>
                     <th>Lastname</th>
-                    <td><input type="text" disabled value="{{ data['res'][0]['lname'] }}" name="" id=""></td>
+                    <td><input type="text" class="form-control" disabled value="{{ data['res'][0]['lname'] }}" name="" id=""></td>
                 </tr>
                 <tr>
                     <th>Place</th>
-                    <td><input type="text" disabled value="{{ data['res'][0]['place'] }}" name="" id=""></td>
+                    <td><input type="text" class="form-control" disabled value="{{ data['res'][0]['place'] }}" name="" id=""></td>
                 </tr>
                 <tr>
                     <th>Phone</th>
-                    <td><input type="text" disabled value="{{ data['res'][0]['phone'] }}" name="" id=""></td>
+                    <td><input type="text" class="form-control" disabled value="{{ data['res'][0]['phone'] }}" name="" id=""></td>
                 </tr>
                 <tr>
                     <th>Email</th>

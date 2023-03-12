@@ -1,8 +1,8 @@
 {% include 'enquiryheader.html' %}
 
-<br><br>
+<br><br>  <div class="top-div"></div>
 <center>
-    {% if data['showrep'] %}
+    {% if data['showrep'] == 1 %}
     <h1>Send Reply</h1>
 
     <form action="" method="post">
@@ -34,11 +34,11 @@
     <tr>
         <td>{{ loop.index }}</td>
         <td>{{ row['fromname'] }}</td>
-        <td>{{ row['name'] }}</td>
+        <td>{{ row['NAME'] }}</td>
         <td>{{ row['complaint'] }}</td>
-        <td>{{ row['date'] }}</td>
-        {% if row['status'] == 'pending' %}
-        <a class="btn btn-success" href="?acton=reply&cid={{ row['complaint_id'] }}"></a>
+        <td>{{ row['DATE'] }}</td>
+        {% if row['reply'] == 'pending' %}
+       <td> <a class="btn btn-success" href="?action=reply&cid={{ row['complaint_id'] }}">Reply</a></td>
         {% else %}
         <td>{{ row['reply'] }}</td>
         {% endif %}

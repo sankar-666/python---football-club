@@ -74,13 +74,17 @@ def login():
 
     return render_template("login.html")
 
-
+import uuid
 @public.route("/enquiry_reg",methods=['get','post'])
 def enquiry_reg():
     if 'btn' in request.form:
         name=request.form['name']
         phone=request.form['phone']
         email=request.form['email']
+        dob=request.form['dob']
+        photo=request.files['photo']
+        path="static/uploads/"+str(uuid.uuid4())+photo.filename
+        photo.save(path)
        
         pwd=request.form['pwd']
         uname=request.form['uname']
@@ -93,7 +97,7 @@ def enquiry_reg():
         else:
             q="insert into login values(null,'%s','%s','pending')"%(uname,pwd)
             lid=insert(q)
-            q="insert into enquiry values (NULL,'%s','%s','%s','%s')"%(lid,name,phone,email)
+            q="insert into enquiry values (NULL,'%s','%s','%s','%s','%s','%s')"%(lid,name,phone,email,path,dob)
             insert(q)
             flash("Registration successfull")
             return redirect(url_for("public.login"))
@@ -144,10 +148,10 @@ def clubreg():
         else:
             q="insert into login values(null,'%s','%s'.'pending')"%(uname,passw)
             res=insert(q)
-            q="insert into coach values(null,'%s','%s','%s','%s')"%(res,club,place,phone)
+            q="insert into club values(null,'%s','%s','%s','%s')"%(res,club,place,phone)
             insert(q)
             flash('registration Successfull')
-            return redirect('public.login')
+            return redirect(url_for("public.login"))
         
     return render_template('club_register.html')
 
@@ -173,6 +177,6 @@ def psyreg():
             q="insert into psysician values(null,'%s','%s','%s','%s')"%(res,name,place,phone,email)
             insert(q)
             flash('registration Successfull')
-        return redirect('public.login')
+        return redirect(url_for("public.login"))
         
     return render_template('club_register.html')

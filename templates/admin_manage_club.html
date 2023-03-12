@@ -2,10 +2,45 @@
 
 <br><br>
 <center>
-<h1>View Club Admin's</h1>
+
+    <br>
+    <form id="reg" action="" method="post" enctype="multipart/form-data">
+        <h1>Add Club</h1>
+        <table class="table" >
+            <tr>
+                <th>Club Name</th>
+                <td><input type="text" name="club" class="form-control" required></td>
+            </tr>
+            <tr>
+                <th>Place</th>
+            <td><input type="text" name="place" class="form-control" required></td>
+        </tr>
+        <tr>
+            <th>phone</th>
+            <td><input type="text" name="phone" pattern="[0-9]{10}" class="form-control" required></td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td><input type="file" class="form-control" name="image" id=""></td>
+        </tr>
+        <tr>
+            <th>User Name</th>
+            <td><input type="text" name="uname" class="form-control" required></td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td><input type="password" name="passw" class="form-control" required></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="register" value="Register" class="btn btn-success"></td>
+        </tr>
+    </table>
+</form>
+<h1>View Clubs</h1>
 <table class="table table-striped tbl-new">
     <tr>
         <th>Index No</th>
+        <th>Image</th>
         <th>Club</th>
         <th>Place</th>
         <th>Phone</th>
@@ -15,6 +50,7 @@
     {% for row in data['res'] %}
     <tr>
         <td>{{ loop.index }}</td>
+        <td><img src="/{{ row['image'] }}" width="100" height="100" alt=""></td>
         <td>{{ row['club'] }}</td>
         <td>{{ row['place'] }}</td>
         <td>{{ row['phone'] }}</td>

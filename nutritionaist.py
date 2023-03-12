@@ -49,6 +49,13 @@ def nutritionaist_view_players():
     data['res']=select(q)   
     return render_template('nutritionaist_view_players.html',data=data)
 
+@nutritionaist.route('/nutritionaist_view_users')
+def nutritionaist_view_users():
+    data={}
+    q="select * from user"
+    data['res']=select(q)   
+    return render_template('nutritionaist_view_users.html',data=data)
+
 
 @nutritionaist.route('/nutritionaist_view_coach')
 def nutritionaist_view_coach():
@@ -104,3 +111,23 @@ def nutritionaist_consultation():
     q="select * from consultation inner join psysician using (psysician_id) where sender_id='%s'"%(session['loginid'])
     data['res']=select(q)   
     return render_template('nutritionaist_consultation.html',data=data)
+
+
+@nutritionaist.route('/nutritionaist_chat',methods=['post','get'])
+def nutritionaist_chat():
+    data={}
+    uid=session['loginid']
+    did=request.args['did']
+    if 'btn' in request.form:
+        name=request.form['txt']
+    
+        q="insert into message values(NULL,'%s','%s','%s',now())"%(uid,did,name)
+        insert(q)
+        return redirect(url_for("nutritionaist.nutritionaist_chat",did=did))
+    q="SELECT * FROM message WHERE (sender_id='%s' AND receiver_id='%s') OR (sender_id='%s' AND receiver_id=('%s')) order by message_id"%(uid,did,did,uid)
+    # q="select * from chats where senderid='%s' and receiverid=( select login_id from doctors where doctor_id='%s' )"%(uid,did)
+    print(q)
+    res=select(q)
+    data['ress']=res
+    
+    return render_template("nutritionaist_chat.html",data=data,uid=uid)

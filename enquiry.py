@@ -137,19 +137,19 @@ def enquiry_ban_player():
     return render_template('enquiry_ban_player.html',data=data) 
 
 
-@enquiry.route('/enquiry_view_complaints')
+@enquiry.route('/enquiry_view_complaints',methods=['get','post'])
 def enquiry_view_complaints():
     data={}
     q="""
-    SELECT `psysician` AS NAME,sended_by AS fromname,complaint,DATE,reply FROM `complaint` INNER JOIN `psysician` ON `complaint`.`sender_id`=`psysician`.login_id
+    SELECT `psysician` AS NAME,sended_by AS fromname,complaint,DATE,reply,complaint_id FROM `complaint` INNER JOIN `psysician` ON `complaint`.`sender_id`=`psysician`.login_id
     UNION
-    SELECT CONCAT(fname,'',lname) AS NAME,sended_by AS fromname,complaint,DATE,reply FROM `complaint` INNER JOIN `nutretion` ON `complaint`.`sender_id`=`nutretion`.login_id
+    SELECT CONCAT(fname,'',lname) AS NAME,sended_by AS fromname,complaint,DATE,reply,complaint_id FROM `complaint` INNER JOIN `nutretion` ON `complaint`.`sender_id`=`nutretion`.login_id
     UNION
-    SELECT CONCAT(fname,'',lname) AS NAME,sended_by AS fromname,complaint,DATE,reply FROM `complaint` INNER JOIN `user` ON `complaint`.`sender_id`=`user`.login_id
+    SELECT CONCAT(fname,'',lname) AS NAME,sended_by AS fromname,complaint,DATE,reply,complaint_id FROM `complaint` INNER JOIN `user` ON `complaint`.`sender_id`=`user`.login_id
     UNION
-    SELECT CONCAT(fname,'',lname) AS NAME,sended_by AS fromname,complaint,DATE,reply FROM `complaint` INNER JOIN `player` ON `complaint`.`sender_id`=`player`.login_id
+    SELECT CONCAT(fname,'',lname) AS NAME,sended_by AS fromname,complaint,DATE,reply,complaint_id FROM `complaint` INNER JOIN `player` ON `complaint`.`sender_id`=`player`.login_id
     UNION
-    SELECT CONCAT(fname,'',lname) AS NAME,sended_by AS fromname,complaint,DATE,reply FROM `complaint` INNER JOIN `coach` ON `complaint`.`sender_id`=`coach`.login_id
+    SELECT CONCAT(fname,'',lname) AS NAME,sended_by AS fromname,complaint,DATE,reply,complaint_id FROM `complaint` INNER JOIN `coach` ON `complaint`.`sender_id`=`coach`.login_id
     """
     data['res']=select(q)
 
@@ -159,15 +159,17 @@ def enquiry_view_complaints():
     else:
         action=None
     
+    print("////////////////////////",action)
     if action == "reply":
-        data['showrep']=True
+        data['showrep']=1
+
     
     if 'btn' in request.form:
         reply=request.form['reply']
         q="update complaint set reply='%s' where complaint_id='%s'"%(reply,cid)
         update(q)
         flash("reply Updated")
-        return redirect(url_for('enwuiry.enquiry_view_complaints'))
+        return redirect(url_for('enquiry.enquiry_view_complaints'))
     return render_template('enquiry_view_complaints.html',data=data)
 
 @enquiry.route('/enquiry_view_playerhistory')
