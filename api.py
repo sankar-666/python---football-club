@@ -1,5 +1,6 @@
 from flask import * 
 from database import *
+import uuid
 
 
 api=Blueprint('api',__name__)
@@ -7,24 +8,31 @@ api=Blueprint('api',__name__)
 
 
 
-@api.route('/userregister')
-def userregister():
-    
+@api.route('/uploadfile',methods=['get','post'])
+def uploadfile():
     data={}
- 
+    image=request.files['image'];
+    lid=request.form['lid'];
+    path="static/uploads/"+str(uuid.uuid4())+image.filename
+    image.save(path)
+
   
-    fname=request.args['fname']
-    lname=request.args['lname']
-    place=request.args['place']
-    phone=request.args['phone']
-    email=request.args['email']
-    uname=request.args['username']
-    passw=request.args['password']
+    fname=request.form['fname']
+    lname=request.form['lname']
+    place=request.form['place']
+    phone=request.form['phone']
+    email=request.form['email']
+    dob=request.form['dob']
+    clubid=request.form['clubid']
+    uname=request.form['username']
+    passw=request.form['password']
+    
     q="select * from login where username='%s'"%(uname)
     print(q)
     res=select(q)
     if res:
         data['status']='duplicate'
+        data['method']='reg'
     else:
         q="insert into login values(null,'%s','%s','user')"%(uname,passw)
         print(q)
@@ -32,7 +40,28 @@ def userregister():
         q="insert into user values(null,'%s','%s','%s','%s','%s','%s')"%(id,fname,lname,place,phone,email)
         print(q)
         insert(q)
+        data['method']='reg'
         data['status']='success'
+        
+
+    return str(data)
+
+
+
+@api.route('/viewclub')
+def viewclub():
+    data={}
+    q="select * from club"
+    res=select(q)
+    data['method']='viewclub'
+    
+    if res:
+        data['status']='success'
+        data['data']=res
+        
+    else:
+        data['status']='failed'
+       
     return str(data)
 
 
